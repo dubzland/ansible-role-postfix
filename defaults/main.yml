@@ -4,3 +4,13 @@ dubzland_postfix_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
 dubzland_postfix_host_name: mail.example.com
 dubzland_postfix_domain_name: example.com
 dubzland_postfix_networks: "127.0.0.0/8, 192.168.0.0/24"
+
+dubzland_postfix_db_host: 127.0.0.1
+dubzland_postfix_db_username: mailuser
+dubzland_postfix_db_password: notsekret
+dubzland_postfix_db_name: mailserver
+
+dubzland_postfix_virtual_alias_maps_query: "SELECT destination FROM virtual_aliases WHERE source = '%s'"
+dubzland_postfix_virtual_email2email_query: "SELECT email FROM virtual_users WHERE email='%s'"
+dubzland_postfix_virtual_mailbox_domains_query: "SELECT 1 FROM virtual_domains WHERE name='%s'"
+dubzland_postfix_virtual_mailbox_maps_query: "SELECT 1 FROM virtual_users WHERE name='%s'"

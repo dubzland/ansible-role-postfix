@@ -1,5 +1,5 @@
-user = mailuser
-password = foobar
-hosts = 127.0.0.1
-dbname = mailserver
-query = SELECT 1 FROM virtual_domains WHERE name='%s'
+user = {{ dubzland_postfix_db_username }}
+password = {{ dubzland_postfix_db_password }}
+hosts = {{ dubzland_postfix_db_host }}
+dbname = {{ dubzland_postfix_db_name }}
+query = {{ dubzland_postfix_virtual_mailbox_domains_query }}

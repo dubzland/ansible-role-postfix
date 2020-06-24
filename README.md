@@ -1,7 +1,6 @@
-# Dubzland: Postfix
-[![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/dubzland/ansible-role-postfix?gitlab_url=https%3A%2F%2Fgit.dubzland.net)](https://git.dubzland.net/dubzland/ansible-role-postfix/pipelines)
+# Dubzland: Postfix [![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/dubzland/ansible-role-postfix?gitlab_url=https%3A%2F%2Fgit.dubzland.net)](https://git.dubzland.net/dubzland/ansible-role-postfix/pipelines)
 
-Installs and configures the Postfix SMTP server
+Installs and configures the Postfix SMTP server with database integration.
 
 ## Requirements
 
@@ -53,13 +52,62 @@ dubzland_postfix_networks: "127.0.0.0/8, 192.168.0.0/24"
 
 Postfix `mynetworks` value.
 
+### dubzland_postfix_db_host
+
+```yaml
+dubzland_postfix_db_host: 127.0.0.1
+```
+
+Host where the PostgreSQL database lives.
+
+### dubzland_postfix_db_username/dubzland_postfix_db_password
+
+```yaml
+dubzland_postfix_db_username: mailuser
+dubzland_postfix_db_password: notsekret
+```
+
+Credentials used to connect to the PostgreSQL database.
+
+### dubzland_postfix_db_name
+
+```yaml
+dubzland_postfix_db_name: mailserver
+```
+
+Name of the PostgreSQL database containing mailbox data.
+
+### dubzland_postfix_virtual_alias_maps_query
+
+```yaml
+dubzland_postfix_virtual_alias_maps_query: "SELECT destination FROM virtual_aliases WHERE source = '%s'"
+```
+
+### dubzland_postfix_virtual_email2email_query
+
+```yaml
+dubzland_postfix_virtual_email2email_query: "SELECT email FROM virtual_users WHERE email='%s'"
+```
+
+### dubzland_postfix_virtual_mailbox_domains_query
+
+```yaml
+dubzland_postfix_virtual_mailbox_domains_query: "SELECT 1 FROM virtual_domains WHERE name='%s'"
+```
+
+### dubzland_postfix_virtual_mailbox_maps_query
+
+```yaml
+dubzland_postfix_virtual_mailbox_maps_query: "SELECT 1 FROM virtual_users WHERE name='%s'"
+```
+
+Queries needed to retrieve mailbox data from the PostgreSQL database.
+
 ## Dependencies
 
 None.
 
 ## Example Playbook
-
-Given a machine with 2 nics (`eth0` on the internet, `eth1` on the LAN):
 
 ```yaml
 - hosts: mailserver

@@ -1,5 +1,5 @@
-user = mailuser
-password = foobar
-hosts = 127.0.0.1
-dbname = mailserver
-query = SELECT destination FROM virtual_aliases WHERE source='%s'
+user = {{ dubzland_postfix_db_username }}
+password = {{ dubzland_postfix_db_password }}
+hosts = {{ dubzland_postfix_db_host }}
+dbname = {{ dubzland_postfix_db_name }}
+query = {{ dubzland_postfix_virtual_alias_maps_query }}
