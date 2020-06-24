@@ -1,0 +1,15 @@
+---
+- include_tasks: variables.yml
+- include_tasks: packages.yml
+- include_tasks: configuration.yml
+
+- name: ensure Postfix configuration is valid
+  command: postconf -n
+  changed_when: False
+
+- meta: flush_handlers
+
+- name: ensure Postfix is running
+  service:
+    name: postfix
+    state: started

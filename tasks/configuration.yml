@@ -1,0 +1,16 @@
+- name: ensure Postfix is configured
+  template:
+    src: "etc/postfix/{{ item }}.j2"
+    dest: "/etc/postfix/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - main.cf
+    - master.cf
+    - pgsql-virtual-alias-maps.cf
+    - pgsql-virtual-email2email.cf
+    - pgsql-virtual-mailbox-domains.cf
+    - pgsql-virtual-mailbox-maps.cf
+  notify:
+    - restart Postfix

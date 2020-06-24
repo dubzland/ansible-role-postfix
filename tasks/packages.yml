@@ -1,0 +1,5 @@
+---
+- name: ensure the required Postfix packages are installed
+  package:
+    name: "{{ dubzland_postfix_packages }}"
+    state: present
