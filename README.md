@@ -1,4 +1,11 @@
-# Dubzland: Postfix [![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/dubzland/ansible-role-postfix?gitlab_url=https%3A%2F%2Fgit.dubzland.net)](https://git.dubzland.net/dubzland/ansible-role-postfix/pipelines)
+# Ansible Role: Postfix
+[![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/dubzland/ansible-role-postfix/main?gitlab_url=https%3A%2F%2Fgit.dubzland.net)](https://git.dubzland.net/dubzland/ansible-role-postfix/pipelines)
+[![Ansible role](https://img.shields.io/ansible/role/49467)](https://galaxy.ansible.com/dubzland/postfix)
+[![Ansible role downloads](https://img.shields.io/ansible/role/d/49467)](https://galaxy.ansible.com/dubzland/postfix)
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/49467)](https://galaxy.ansible.com/dubzland/postfix)
+[![Liberapay patrons](https://img.shields.io/liberapay/patrons/jdubz)](https://liberapay.com/jdubz/donate)
+[![Liberapay receiving](https://img.shields.io/liberapay/receives/jdubz)](https://liberapay.com/jdubz/donate)
+
 
 Installs and configures the Postfix SMTP server with database integration.
 
