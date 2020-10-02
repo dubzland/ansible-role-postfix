@@ -71,13 +71,12 @@ smtpd_relay_restrictions =
 # information on enabling SSL in the smtp client.
 
 myhostname = {{ dubzland_postfix_host_name }}
-mydomain = {{ dubzland_postfix_domain_name }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
+mydomain = {{ dubzland_postfix_domain_name }}
 myorigin = $mydomain
 mydestination = localhost
 relayhost = 
-mynetworks_style = host
 mynetworks = {{ dubzland_postfix_networks | join(", ") }}
 mailbox_size_limit = 0
 recipient_delimiter = +
@@ -92,4 +91,24 @@ virtual_mailbox_maps = pgsql:/etc/postfix/pgsql-virtual-mailbox-maps.cf
 virtual_alias_maps = pgsql:/etc/postfix/pgsql-virtual-alias-maps.cf,
                    pgsql:/etc/postfix/pgsql-virtual-email2email.cf
 
-#local_recipient_maps = $alias_maps
+disable_vrfy_command = yes
+strict_rfc821_envelopes = yes
+smtpd_delay_reject = yes
+smtpd_helo_required = yes
+smtp_always_send_ehlo = yes
+smtpd_timeout = 30s
+smtp_helo_timeout = 15s
+smtp_rcpt_timeout = 15s
+smtpd_recipient_limit = 40
+minimal_backoff_time = 180s
+maximal_backoff_time = 3h
+
+invalid_hostname_reject_code = 550
+non_fqdn_reject_code = 550
+unknown_address_reject_code = 550
+
+# Milter configuration
+milter_default_action = accept
+milter_protocol = 6
+smtpd_milters = unix:/opendkim/opendkim.sock
+non_smtpd_milters = $smtpd_milters

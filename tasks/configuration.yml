@@ -1,3 +1,65 @@
+---
+- name: ensure the opendkim configuration directory exists
+  file:
+    path: /etc/opendkim
+    state: directory
+    owner: opendkim
+    group: opendkim
+    mode: 0700
+
+- name: ensure the opendkim socket directory exists
+  file:
+    path: /var/spool/postfix/opendkim
+    state: directory
+    owner: opendkim
+    group: postfix
+
+- name: ensure the socket isn't overridden by upstart
+  lineinfile:
+    path: /etc/default/opendkim
+    regexp: '^(SOCKET.*)'
+    line: '# \1'
+    backrefs: yes
+    state: present
+
+- name: ensure the opendkim keys directories exist
+  file:
+    path: /etc/opendkim/keys/{{ item }}
+    state: directory
+    owner: opendkim
+    group: opendkim
+    mode: 0700
+  loop:
+    - "{{ dubzland_postfix_domain_name }}"
+
+- name: ensure the opendkim keys exist
+  command: "opendkim-genkey -b 2048 -d {{ item }} -D /etc/opendkim/keys/{{ item }} -s default"
+  args:
+    creates: "/etc/opendkim/keys/{{ item }}/default.private"
+  loop:
+    - "{{ dubzland_postfix_domain_name }}"
+
+- name: ensure the opendkim user owns the keys
+  file:
+    path: /etc/opendkim/keys/{{ item }}/default.private
+    owner: opendkim
+    group: opendkim
+  loop:
+    - "{{ dubzland_postfix_domain_name }}"
+
+- name: ensure OpenDKIM is configured
+  template:
+    src: "etc/{{ item }}.j2"
+    dest: "/etc/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - opendkim.conf
+    - opendkim/signing.table
+    - opendkim/key.table
+    - opendkim/trusted.hosts
+
 - name: ensure Postfix is configured
   template:
     src: "etc/postfix/{{ item }}.j2"
@@ -14,3 +76,10 @@
     - pgsql-virtual-mailbox-maps.cf
   notify:
     - restart Postfix
+
+- name: ensure the Postfix user belongs to the opendkim group
+  user:
+    name: postfix
+    groups:
+      - opendkim
+    append: yes
