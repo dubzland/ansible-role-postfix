@@ -10,7 +10,9 @@ dubzland_postfix_db_username: mailuser
 dubzland_postfix_db_password: notsekret
 dubzland_postfix_db_name: mailserver
 
+# yamllint disable rule:line-length
 dubzland_postfix_virtual_alias_maps_query: "SELECT destination FROM virtual_aliases WHERE source = '%s'"
 dubzland_postfix_virtual_email2email_query: "SELECT email FROM virtual_users WHERE email='%s'"
 dubzland_postfix_virtual_mailbox_domains_query: "SELECT 1 FROM virtual_domains WHERE name='%s'"
 dubzland_postfix_virtual_mailbox_maps_query: "SELECT 1 FROM virtual_users WHERE email='%s'"
+# yamllint ensable rule:line-length

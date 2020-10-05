@@ -1,3 +1,4 @@
+---
 dubzland_postfix_packages:
   - postfix
   - postfix-pgsql

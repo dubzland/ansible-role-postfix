@@ -5,7 +5,7 @@
 
 - name: ensure Postfix configuration is valid
   command: postconf -n
-  changed_when: False
+  changed_when: false
 
 - meta: flush_handlers
 

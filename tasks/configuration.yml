@@ -13,13 +13,14 @@
     state: directory
     owner: opendkim
     group: postfix
+    mode: 0770
 
 - name: ensure the socket isn't overridden by upstart
   lineinfile:
     path: /etc/default/opendkim
     regexp: '^(SOCKET.*)'
     line: '# \1'
-    backrefs: yes
+    backrefs: true
     state: present
 
 - name: ensure the opendkim keys directories exist
@@ -33,6 +34,7 @@
     - "{{ dubzland_postfix_domain_name }}"
 
 - name: ensure the opendkim keys exist
+  # yamllint disable-line rule:line-length
   command: "opendkim-genkey -b 2048 -d {{ item }} -D /etc/opendkim/keys/{{ item }} -s default"
   args:
     creates: "/etc/opendkim/keys/{{ item }}/default.private"
@@ -82,4 +84,4 @@
     name: postfix
     groups:
       - opendkim
-    append: yes
+    append: true
